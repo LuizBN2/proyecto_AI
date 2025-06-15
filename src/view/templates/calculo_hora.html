@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de duración en horas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🔍 Predicción de duración en horas</h1>
+
+            <form method="POST" class="formulario">
+                <label for="cie10">Código CIE10:</label>
+                <input name="cie10" id="cie10" required>
+
+                <label for="sexo">Sexo:</label>
+                <select name="sexo" id="sexo">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+
+                <label for="edad">Edad:</label>
+                <input name="edad" type="number" id="edad" required min="0">
+
+                <label for="tipo_atencion">Tipo de atención:</label>
+                <select name="tipo_atencion" id="tipo_atencion">
+                    <option value="1">Consulta</option>
+                    <option value="2">Urgencias</option>
+                    <option value="3">Otro</option>
+                </select>
+
+                <button type="submit">Predecir</button>
+            </form>
+
+            {% if resultado %}
+                <div class="resultado">
+                    <h2>⏱️ Resultado: {{ resultado }}</h2>
+                </div>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="errores">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>
